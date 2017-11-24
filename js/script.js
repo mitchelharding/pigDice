@@ -14,6 +14,21 @@ function Player(turn){
   this.playerName;
 }
 
+Player.prototype.rollone = function(){
+    if(this.roll === 1) {
+      this.tempscore = 0;
+      alert("Sorry" + this.playerName + ", you rolled a 1! You turn is over.")
+  }else{
+    this.tempscore += this.roll;
+  }
+}
+
+Player.prototype.hold = function(){
+  this.totalscore += this.tempscore;
+  this.tempscore = 0;
+  alert(this.playerName + "your turn is over, pass the mouse!");
+}
+
 function resetFields(){
   $(".player1Name").val("");
   $(".player2Name").val("");
@@ -40,6 +55,24 @@ $(document).ready(function(){
 
   $("button#die-roll-1").click(function(event){
     player1.roll = rollDice();
-    alert(player1.roll);
+    $(".die-roll-1").text(player1.roll);
+    player1.rollone()
+    $(".turn-score-1").text(player1.tempscore);
   });
+
+   $("button#die-roll-2").click(function(event){
+     player2.roll = rollDice();
+     $(".die-roll-2").text(player2.roll);
+     player2.rollone()
+     $(".turn-score-2").text(player2.tempscore);
+   });
+
+   $("button#hold-1").click(function(event){
+     player1.hold()
+     $(".total-score-1").text(player1.totalscore);
+     $(".turn-score-1").empty();
+     $(".die-roll-1").empty();
+   });
+
+
 });
