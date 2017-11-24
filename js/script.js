@@ -29,9 +29,23 @@ Player.prototype.hold = function(){
   alert(this.playerName + "your turn is over, pass the mouse!");
 }
 
+Player.prototype.winnerCheck = function(){
+  if(this.totalscore >= 100){
+    alert(this.player + "you are the winner!")
+  }
+}
+
 function resetFields(){
   $(".player1Name").val("");
   $(".player2Name").val("");
+  $(".player1NamePlace").val("");
+  $(".player2NamePlace").val("");
+  $(".die-roll-1").val("");
+  $(".turn-score-1").val("");
+  $(".total-score-1").val("");
+  $(".die-roll-2").val("");
+  $(".turn-score-2").val("");
+  $(".total-score-2").val("");
 }
 
 
@@ -53,6 +67,12 @@ $(document).ready(function(){
     player2.playerName = player2Name;
   });
 
+  $("button#newGame").click(function(event){
+    resetFields();
+    $(".game-console").hide();
+    $(".start-menu").show();
+  });
+
   $("button#die-roll-1").click(function(event){
     player1.roll = rollDice();
     $(".die-roll-1").text(player1.roll);
@@ -72,7 +92,14 @@ $(document).ready(function(){
      $(".total-score-1").text(player1.totalscore);
      $(".turn-score-1").empty();
      $(".die-roll-1").empty();
+     player1.winnerCheck();
    });
 
-
+   $("button#hold-2").click(function(event){
+     player2.hold();
+     $(".total-score-2").text(player2.totalscore);
+     $(".turn-score-2").empty();
+     $(".die-roll-2").empty();
+     player2.winnerCheck();
+   });
 });
